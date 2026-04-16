@@ -44,3 +44,6 @@ Response:
 ## Notes
 - Designed with simplicity and clarity in mind
 - Focus on clean architecture and separation of concerns
+
+## Figma
+https://www.figma.com/design/t1cgjs85RdlZcFjkPKGjBO/CSV-Analyzer?node-id=0-1&t=pqS6XZLCtEMhYKhK-1
