@@ -1,9 +1,21 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+    --color-brand-primary: #4F46E5;
+    --color-brand-success: #10B981;
+    --color-brand-error: #EF4444;
+
+    --color-surface: #FFFFFF;
+    --color-surface-muted: #F9FAFB;
+
+    --radius-card: 12px;
+    --radius-button: 8px;
+
+    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
 
 @layer base {
     body {
-        @apply bg-surface-muted text-slate-900 font-sans;
+        @apply bg-surface-muted text-slate-900;
     }
 }

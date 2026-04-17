@@ -280,3 +280,7 @@ venv/
 .venv/
 env/
 ENV/
+
+# Idea global
+idea/
+.idea/
