@@ -4,10 +4,15 @@
 ## Overview
 This project is a simple full-stack application that allows users to upload CSV files, process them, and visualize basic statistics.
 
-## Tech Stack
-- Frontend: Next.js (React)
-- Backend: Django + DRF
-- Data processing: pandas
+## Tech Stack & Architecture
+- Frontend: Next.js
+- Backend: Django (REST) API
+- Data: pandas (CSV Processing Service)
+
+## Trade-offs
+- Used synchronous processing instead of Celery for simplicity
+- Used pandas for fast aggregation
+- Simulated async flow on frontend
 
 ## Features
 - CSV upload
@@ -15,6 +20,12 @@ This project is a simple full-stack application that allows users to upload CSV 
 - Statistical analysis (mean, median, min, max)
 - Error handling
 - Basic UI feedback
+
+## Edge Cases
+- Empty CSV
+- Missing columns
+- Non-numeric values
+- Large files
 
 ## Setup
 
