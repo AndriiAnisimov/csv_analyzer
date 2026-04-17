@@ -1,0 +1,7 @@
+test_id,result
+101,95.5
+102,error
+103,"100,00"
+104,
+105,NaN
+106,undefined
