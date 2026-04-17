@@ -8,10 +8,10 @@ import UploadForm from "../components/UploadForm";
 export default function Page() {
   const [data, setData] = useState<any[]>([]);
   const [error, setError] = useState("");
-  const [datasetOverview, setDatasetOverview] = useState<any>(null);
+  const [stats, setStats] = useState<any>(null);
   const [status, setStatus] = useState("");
 
-  const hasData = datasetOverview || data.length > 0;
+  const hasData = stats || data.length > 0;
 
   return (
     <div className="min-h-screen bg-[#0D1117] text-white py-12 px-4">
@@ -24,7 +24,7 @@ export default function Page() {
         <UploadForm
           setStatus={setStatus}
           onSuccess={(res: any) => {
-            setDatasetOverview(res.datasetOverview);
+            setStats(res.stats);
             setData(res.data);
             setError("");
           }}
@@ -47,7 +47,7 @@ export default function Page() {
 
         {hasData && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            <DatasetOverview datasetOverview={datasetOverview} />
+            <DatasetOverview stats={stats} />
             {data.length > 0 && <DataDistribution data={data} />}
           </div>
         )}

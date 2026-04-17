@@ -1,7 +1,7 @@
 "use client";
 
-export default function DatasetOverview({ datasetOverview }: any) {
-  if (!datasetOverview) return null;
+export default function DatasetOverview({ stats }: any) {
+  if (!stats) return null;
 
   return (
     <div className="flex flex-col w-full p-8 border border-[#30363D] rounded-xl bg-[#161B22] transition-colors duration-200">
@@ -24,7 +24,7 @@ export default function DatasetOverview({ datasetOverview }: any) {
 
       <div className="relative overflow-hidden rounded-lg border border-[#30363D] bg-[#0D1117]">
         <pre className="p-4 text-xs sm:text-sm text-blue-400 font-mono overflow-x-auto leading-relaxed">
-          {JSON.stringify(datasetOverview, null, 2)}
+          {JSON.stringify(stats, null, 2)}
         </pre>
       </div>
 
