@@ -12,28 +12,33 @@ export default function Page() {
   const [status, setStatus] = useState("");
 
   return (
-    <div style={{ padding: 40 }}>
-      <h1>CSV Analyzer</h1>
+    <div className="my-12 mx-auto">
+      <header className="max-w-6xl mx-auto mb-10">
+        <h1 className="text-3xl font-bold">CSV Analyzer</h1>
+        <p className="text-gray-400 mt-2">Upload, analyze and visualize your data</p>
+      </header>
 
-      <UploadForm
-        setStatus={setStatus}
-        onSuccess={(res: any) => {
-          setDatasetOverview(res.datasetOverview);
-          setData(res.data);
-          setError("");
-        }}
-        onError={(err: string) => {
-          setError(err);
-          setStatus("");
-        }}
-      />
+      <main className="max-w-6xl mx-auto space-y-8">
+        <UploadForm
+          setStatus={setStatus}
+          onSuccess={(res: any) => {
+            setDatasetOverview(res.datasetOverview);
+            setData(res.data);
+            setError("");
+          }}
+          onError={(err: string) => {
+            setError(err);
+            setStatus("");
+          }}
+        />
 
-      {status && <p>{status}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+        {status && <p>{status}</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <DatasetOverview datasetOverview={datasetOverview} />
+        <DatasetOverview datasetOverview={datasetOverview} />
 
-      {data.length > 0 && <DataDistribution data={data} />}
+        {data.length > 0 && <DataDistribution data={data} />}
+      </main>
     </div>
   );
 }
