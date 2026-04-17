@@ -280,6 +280,9 @@ venv/
 .venv/
 env/
 ENV/
+**/__pycache__/
+*.pyc
+.DS_Store
 
 # Idea global
 idea/
