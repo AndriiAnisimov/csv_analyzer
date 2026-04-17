@@ -1,27 +1,36 @@
-"use client";
-
 import { useState } from "react";
 import { uploadCSV } from "../lib/api";
+import type { CSVResponse } from "../types/csv";
+import type { Status } from "../types/status";
 
-export default function UploadForm({ onSuccess, onError, setStatus }: any) {
+type Props = {
+  onSuccess: (data: CSVResponse) => void;
+  onError: (error: string) => void;
+  setStatus: (status: Status) => void;
+};
+
+export default function UploadForm({ onSuccess, onError, setStatus }: Props) {
   const [file, setFile] = useState<File | null>(null);
 
   const handleUpload = async () => {
     if (!file) return;
 
     try {
-      setStatus("Uploading...");
+      setStatus("processing");
       const res = await uploadCSV(file);
 
-      setTimeout(() => setStatus("Processing..."), 800);
-      setTimeout(() => setStatus("Rendering..."), 1600);
+      setTimeout(() => setStatus("calculating"), 800);
 
       setTimeout(() => {
         onSuccess(res);
-        setStatus("");
-      }, 2200);
-    } catch (e: any) {
-      onError(e.message);
+        setStatus("rendering");
+      }, 1600);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        onError(e.message);
+      } else {
+        onError("Unexpected error");
+      }
     }
   };
 
@@ -44,7 +53,7 @@ export default function UploadForm({ onSuccess, onError, setStatus }: any) {
       <input
         type="file"
         accept=".csv"
-        onChange={(e) => setFile(e.target.files?.[0] || null)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFile(e.target.files?.[0] || null)}
         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
       />
 
