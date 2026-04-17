@@ -11,11 +11,13 @@ export default function Page() {
   const [datasetOverview, setDatasetOverview] = useState<any>(null);
   const [status, setStatus] = useState("");
 
+  const hasData = datasetOverview || data.length > 0;
+
   return (
-    <div className="my-12 mx-auto">
-      <header className="max-w-6xl mx-auto mb-10">
-        <h1 className="text-3xl font-bold">CSV Analyzer</h1>
-        <p className="text-gray-400 mt-2">Upload, analyze and visualize your data</p>
+    <div className="min-h-screen bg-[#0D1117] text-white py-12 px-4">
+      <header className="max-w-6xl mx-auto mb-10 text-center sm:text-left">
+        <h1 className="text-4xl font-extrabold tracking-tight text-white">CSV Analyzer</h1>
+        <p className="text-gray-400 mt-2 text-lg">Upload, analyze and visualize your data</p>
       </header>
 
       <main className="max-w-6xl mx-auto space-y-8">
@@ -32,12 +34,23 @@ export default function Page() {
           }}
         />
 
-        {status && <p>{status}</p>}
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        <div className="flex flex-col items-center justify-center min-h-[24px]">
+          {status && (
+            <p className="text-blue-400 animate-pulse font-medium">{status}</p>
+          )}
+          {error && (
+            <p className="text-red-500 bg-red-500/10 px-4 py-2 rounded-lg border border-red-500/20">
+              {error}
+            </p>
+          )}
+        </div>
 
-        <DatasetOverview datasetOverview={datasetOverview} />
-
-        {data.length > 0 && <DataDistribution data={data} />}
+        {hasData && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            <DatasetOverview datasetOverview={datasetOverview} />
+            {data.length > 0 && <DataDistribution data={data} />}
+          </div>
+        )}
       </main>
     </div>
   );
