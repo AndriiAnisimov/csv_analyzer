@@ -1,16 +1,15 @@
-
 "use client";
 
 import { useState } from "react";
+import DataDistribution from "../components/DataDistribution";
+import DatasetOverview from "../components/DatasetOverview";
 import UploadForm from "../components/UploadForm";
-import Stats from "../components/Stats";
-import Chart from "../components/Chart";
 
 export default function Page() {
-  const [status, setStatus] = useState("");
-  const [error, setError] = useState("");
-  const [stats, setStats] = useState<any>(null);
   const [data, setData] = useState<any[]>([]);
+  const [error, setError] = useState("");
+  const [datasetOverview, setDatasetOverview] = useState<any>(null);
+  const [status, setStatus] = useState("");
 
   return (
     <div style={{ padding: 40 }}>
@@ -19,7 +18,7 @@ export default function Page() {
       <UploadForm
         setStatus={setStatus}
         onSuccess={(res: any) => {
-          setStats(res.stats);
+          setDatasetOverview(res.datasetOverview);
           setData(res.data);
           setError("");
         }}
@@ -32,9 +31,9 @@ export default function Page() {
       {status && <p>{status}</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <Stats stats={stats} />
+      <DatasetOverview datasetOverview={datasetOverview} />
 
-      {data.length > 0 && <Chart data={data} />}
+      {data.length > 0 && <DataDistribution data={data} />}
     </div>
   );
 }

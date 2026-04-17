@@ -274,3 +274,9 @@ dist
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/node,jetbrains,visualstudiocode
+
+# Python virtual environment
+venv/
+.venv/
+env/
+ENV/

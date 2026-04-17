@@ -1,4 +1,3 @@
-
 import pandas as pd
 
 def process_csv(file):
@@ -16,7 +15,7 @@ def process_csv(file):
         if df["result"].isnull().any():
             return {"error": "Column 'result' contains non-numeric values"}
 
-        stats = {
+        datasetOverview = {
             "mean": float(df["result"].mean()),
             "median": float(df["result"].median()),
             "min": float(df["result"].min()),
@@ -25,7 +24,7 @@ def process_csv(file):
 
         data = df[["test_id", "result"]].to_dict(orient="records")
 
-        return {"stats": stats, "data": data}
+        return {"datasetOverview": datasetOverview, "data": data}
 
     except Exception as e:
         return {"error": str(e)}
