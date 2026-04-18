@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { uploadCSV } from "../lib/api";
 import type { CSVResponse } from "../types/csv";
@@ -11,26 +13,26 @@ type Props = {
 
 export default function UploadForm({ onSuccess, onError, setStatus }: Props) {
   const [file, setFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleUpload = async () => {
-    if (!file) return;
+    if (!file || isLoading) return;
 
     try {
-      setStatus("processing");
+      setIsLoading(true);
+      setStatus("uploading");
+
       const res = await uploadCSV(file);
 
-      setTimeout(() => setStatus("calculating"), 800);
-
-      setTimeout(() => {
-        onSuccess(res);
-        setStatus("rendering");
-      }, 1600);
+      onSuccess(res);
     } catch (e: unknown) {
       if (e instanceof Error) {
         onError(e.message);
       } else {
         onError("Unexpected error");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -43,28 +45,43 @@ export default function UploadForm({ onSuccess, onError, setStatus }: Props) {
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
-          <path d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path
+            d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
 
-        <p className="text-base font-medium text-gray-200">Select CSV file to analyze</p>
-        <p className="text-xs text-gray-500 mt-1">Maximum size: 10MB</p>
+        <p className="text-base font-medium text-gray-200">
+          Select CSV file to analyze
+        </p>
+        <p className="text-xs text-gray-500 mt-1">
+          Maximum size: 10MB
+        </p>
       </div>
 
       <input
         type="file"
         accept=".csv"
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFile(e.target.files?.[0] || null)}
+        disabled={isLoading}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setFile(e.target.files?.[0] || null)
+        }
         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
       />
 
       <button
         onClick={handleUpload}
-        className="relative z-10 mt-6 px-10 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold rounded-lg transition-all active:scale-95"
+        disabled={isLoading}
+        className={`relative z-10 mt-6 px-10 py-2.5 text-white text-sm font-semibold rounded-lg transition-all active:scale-95
+          ${isLoading ? "bg-gray-600 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-500"}
+        `}
       >
-        Upload
+        {isLoading ? "Uploading..." : "Upload"}
       </button>
 
-      {file && (
+      {file && !isLoading && (
         <p className="absolute bottom-4 text-xs text-blue-400 font-mono">
           Selected: {file.name}
         </p>
